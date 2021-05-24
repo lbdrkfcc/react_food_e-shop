@@ -1,0 +1,74 @@
+import React, {Fragment, useState} from 'react'
+import { Carousel } from 'react-bootstrap'
+import {carouselData} from '../data/products'
+
+export function Info() {
+
+  const [carouselItems, setCarouselItems] = useState(JSON.parse(carouselData))
+  const [carouselIndex, setCarouselIndex] = useState(0)
+
+  const carouselRef = React.createRef()
+
+  function clickNext(e){
+    e.preventDefault()
+    if(carouselIndex + 1 > carouselItems.length - 1){
+      setCarouselIndex(0)
+    }else{
+      setCarouselIndex(carouselIndex + 1)
+    }
+    
+    // console.log(carouselItems.length, carouselIndex)
+  }
+  function clickPrev(e){
+    e.preventDefault()
+    if(carouselIndex - 1 < 0){
+      setCarouselIndex(carouselItems.length - 1)
+    }else{
+      setCarouselIndex(carouselIndex - 1)
+    }
+    
+    // console.log(carouselItems.length, carouselIndex)
+  }
+  
+
+  return (
+
+      <Fragment>
+          <div className="container">
+            <h1>Informacija</h1>
+            <div className="row">
+              <div className="col">
+                <button type="button" className="btn" onClick={clickPrev}>Prev</button>
+                <button type="button" className="btn" onClick={clickNext}>Next</button>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col">
+                <Carousel 
+                id="carousel"
+                interval={null}
+                ref={carouselRef}
+                activeIndex = {carouselIndex}
+                >
+                  {carouselItems.map((item,i) => {
+                    return  <Carousel.Item key={i}>
+                              <img
+                                className="d-block w-100"
+                                src={item.src}
+                                alt={item.alt}
+                              />
+                              <Carousel.Caption>
+                                <h3>{item.title}</h3>
+                                <p>{item.text}</p>
+                              </Carousel.Caption>
+                            </Carousel.Item>
+                  })}
+                </Carousel>
+              </div>
+            </div>
+            
+          </div>
+      </Fragment>
+    
+  );
+}

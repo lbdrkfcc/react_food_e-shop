@@ -1,0 +1,12 @@
+#root>.container{
+    min-height: 100vh;
+}
+
+.modal{
+    display: block;
+}
+
+.modal-backdrop{
+    display: block;
+    opacity: .5;
+}
